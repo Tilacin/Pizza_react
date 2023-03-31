@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 
-
 import pizzas from "./assets/pizza.json";
 
 import "./scss/app.scss";
@@ -24,7 +23,7 @@ function App() {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
               {pizzas.map((obj) => (
-                <PizzaBlock {...obj} />
+                <PizzaBlock key={obj.id} {...obj} />
               ))}
             </div>
           </div>
