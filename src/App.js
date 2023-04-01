@@ -10,6 +10,8 @@ import "./scss/app.scss";
 import PizzaBlock from "./components/PizzaBlock";
 
 function App() {
+
+
   return (
     <div className="App">
       <div className="wrapper">
