@@ -7,7 +7,9 @@
 body {
   background-color: $background;
 }
-
+.App {
+ display: flex;
+}
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
@@ -111,6 +113,7 @@ body {
 }
 
 .cart {
+  
   &__top {
     display: flex;
     justify-content: space-between;
@@ -165,6 +168,11 @@ body {
       }
     }
   }
+
+.content__items {
+display: block;
+
+}
 
   &__item {
     display: flex;

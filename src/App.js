@@ -15,7 +15,7 @@ function App() {
       <div className="wrapper">
         <Header />
 
-        <div className="content">
+        
           <div className="container">
             {/* Делаем роутинг */}
             <Routes>
@@ -28,7 +28,7 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
