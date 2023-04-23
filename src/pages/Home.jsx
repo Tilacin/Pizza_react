@@ -1,21 +1,32 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux'
 
+import { setCategoryId } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import { Skeleton } from "../components/PizzaBlock/Skeleton";
-import Pagination  from '../components/Pagination/pagination';
+import Pagination from '../components/Pagination/pagination';
 import { SearchContext } from "../App";
 
 let Home = () => {
-    const {searchValue} = React.useContext(SearchContext)
+    const dispatch = useDispatch()
+    const categoryId = useSelector((state) => state.filter.categoryId)
+
+
+
+    const { searchValue } = React.useContext(SearchContext)
     const [items, setItems] = React.useState([]); //пиццы, состояние
     const [isLoading, setIsLoading] = React.useState(true); //скелетон
-    const [categoryId, setCategoryId] = React.useState(0)//категории
+
     const [currentPage, setCurrentPage] = React.useState(1)//страницы
     const [sortType, setSortType] = React.useState({        //сортировка
         name: 'популярности', sortProperty: 'rating'
     })
+
+    const onChangeCategory = (id) => {
+        dispatch(setCategoryId(id))
+    }
 
     //получаем и отрисовываем пиццы с бэка, что бы бесконечно не отрисовывалось оборачиваем в .useEffect()
     React.useEffect(() => {
@@ -45,7 +56,7 @@ let Home = () => {
     return (
         <div className="content">
             <div className="content__top">
-                <Categories value={categoryId} onChangeCategory={(i) => setCategoryId(i)} />{/*прокидываем пропс в категории */}
+                <Categories value={categoryId} onChangeCategory={onChangeCategory} />{/*прокидываем пропс в категории */}
                 <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
@@ -53,7 +64,7 @@ let Home = () => {
                 {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
                 {isLoading ? skeletons : pizzas}
             </div>
-           <Pagination onChangePage={number => setCurrentPage(number)}/>
+            <Pagination onChangePage={number => setCurrentPage(number)} />
         </div>
     )
 }

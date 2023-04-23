@@ -1,6 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "./redux/slices/filterSlice";
+
 
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -14,25 +13,9 @@ export const SearchContext = React.createContext(); //контекст
 
 function App() {
   const [searchValue, setSearchValue] = React.useState(""); //инпут
-  const count = useSelector((state) => state.counter.count);
-  const dispatch = useDispatch();
 
   return (
     <div className="wrapper">
-      <button
-        aria-label="Increment value"
-        onClick={() => dispatch(increment())}
-      >
-        Increment
-      </button>
-      <span>{count}</span>
-      <button
-        aria-label="Decrement value"
-        onClick={() => dispatch(decrement())}
-      >
-        Decrement
-      </button>
-
       <SearchContext.Provider value={{ searchValue, setSearchValue }}>
         {/* Обернули в контекст и 
       теперь параметры можно пробросить сразу в нужный компонент, а не по цепочке вложенности */}
