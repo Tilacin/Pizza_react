@@ -11,8 +11,8 @@ import { SearchContext } from "../App";
 
 let Home = () => {
     const dispatch = useDispatch()
-    const categoryId = useSelector((state) => state.filter.categoryId)
-
+    const { categoryId, sort } = useSelector((state) => state.filter)
+    const sortType = sort.sortProperty
 
 
     const { searchValue } = React.useContext(SearchContext)
@@ -20,9 +20,7 @@ let Home = () => {
     const [isLoading, setIsLoading] = React.useState(true); //скелетон
 
     const [currentPage, setCurrentPage] = React.useState(1)//страницы
-    const [sortType, setSortType] = React.useState({        //сортировка
-        name: 'популярности', sortProperty: 'rating'
-    })
+
 
     const onChangeCategory = (id) => {
         dispatch(setCategoryId(id))
@@ -32,9 +30,10 @@ let Home = () => {
     React.useEffect(() => {
         setIsLoading(true);//при смене категории отображается скелетон
 
-        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-        const sortBy = sortType.sortProperty.replace('-', '')
+        const sortBy = sortType.replace('-', '')
+        const order = sortType.includes('-') ? 'asc' : 'desc'
         const category = categoryId > 0 ? `category=${categoryId}` : ''
+        
 
         fetch(`https://6429bc455a40b82da4d97645.mockapi.io/items?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}&{search}`,)
             .then((res) => res.json())
@@ -57,7 +56,7 @@ let Home = () => {
         <div className="content">
             <div className="content__top">
                 <Categories value={categoryId} onChangeCategory={onChangeCategory} />{/*прокидываем пропс в категории */}
-                <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
+                <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
