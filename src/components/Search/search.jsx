@@ -1,13 +1,35 @@
 import React from 'react';
-
-
+import debounce from 'lodash.debounce'
 
 import styles from './Search.module.scss';
 import { SearchContext } from '../../App';
 
 
 const Search = () => {
-  const {searchValue, setSearchValue} = React.useContext(SearchContext)
+  const [value, setValue] = React.useState('')
+  const { setSearchValue } = React.useContext(SearchContext)
+  const inputRef = React.useRef()
+
+
+
+  const onClickClear = () => {
+    setSearchValue('')//при клике на крестик очищаем инпут в контексте (useContext)
+    setValue('') //при клике на крестик очищаем инпут локально
+    inputRef.current.focus()//при клике на крестик делаем фокус на инпут
+  }
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      setSearchValue(str)
+    }, 500),//отложенное выполнение функции, что бы при вводе в инпут  
+    [],//      после ввода каждой буквы приложение не отрисовывалось, а отрендирилось один раз
+  )
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value)
+    updateSearchValue(event.target.value)
+  }
+
 
 
   return (
@@ -46,15 +68,15 @@ const Search = () => {
         />
       </svg>
       <input
-        
-        value={searchValue}
-        onChange={(event) => setSearchValue(event.target.value)}
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInput}
         className={styles.input}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && (
+      {value && (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={onClickClear}
           className={styles.clearIcon}
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg">

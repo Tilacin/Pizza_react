@@ -1,7 +1,8 @@
 import React from "react";
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurentPage } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
@@ -11,7 +12,7 @@ import { SearchContext } from "../App";
 
 let Home = () => {
     const dispatch = useDispatch()
-    const { categoryId, sort } = useSelector((state) => state.filter)
+    const { categoryId, sort, currentPage } = useSelector((state) => state.filter)
     const sortType = sort.sortProperty
 
 
@@ -19,13 +20,17 @@ let Home = () => {
     const [items, setItems] = React.useState([]); //пиццы, состояние
     const [isLoading, setIsLoading] = React.useState(true); //скелетон
 
-    const [currentPage, setCurrentPage] = React.useState(1)//страницы
+    
 
 
     const onChangeCategory = (id) => {
-        dispatch(setCategoryId(id))
-    }
 
+        dispatch(setCategoryId(id))
+
+    }
+const onChangePage = number => {
+    dispatch(setCurentPage(number))
+}
     //получаем и отрисовываем пиццы с бэка, что бы бесконечно не отрисовывалось оборачиваем в .useEffect()
     React.useEffect(() => {
         setIsLoading(true);//при смене категории отображается скелетон
@@ -33,14 +38,15 @@ let Home = () => {
         const sortBy = sortType.replace('-', '')
         const order = sortType.includes('-') ? 'asc' : 'desc'
         const category = categoryId > 0 ? `category=${categoryId}` : ''
-        
+        const search = searchValue ? `&search=${searchValue}` : ''
 
-        fetch(`https://6429bc455a40b82da4d97645.mockapi.io/items?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}&{search}`,)
-            .then((res) => res.json())
-            .then((arr) => {
-                setItems(arr); //отрендерим пиццы
-                setIsLoading(false); //загрузка завершилась,скелетон false, отображаем пиццы
-            });
+        axios.get(`https://6429bc455a40b82da4d97645.mockapi.io/items?page=${currentPage}&limit=4${category}&sortBy=${sortBy}&order=${order}${search}`
+        )
+            .then((res) => {
+                setItems(res.data)
+                setIsLoading(false)
+            })
+
         window.scrollTo(0, 0)//при рендере оказываемся всегда в верху страницы
     }, [categoryId, sortType, searchValue, currentPage]);//если меняется категория(categoryId) или сорт(sortType) всегда делать запрос
 
@@ -63,7 +69,7 @@ let Home = () => {
                 {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
                 {isLoading ? skeletons : pizzas}
             </div>
-            <Pagination onChangePage={number => setCurrentPage(number)} />
+            <Pagination currentPage={currentPage} onChangePage={onChangePage} />
         </div>
     )
 }
