@@ -14,6 +14,7 @@ const list = [
 function Sort() {
   const dispatch = useDispatch()
   const sort = useSelector(state => state.filter.sort)//вытакскиваем инфо о сортировке
+  const sortRef = React.useRef()
 
   const [open, setOpen] = React.useState(false)//попап
 
@@ -25,8 +26,22 @@ function Sort() {
     setOpen(false)//скрытие после выбора
   }
 
+React.useEffect(() => {
+  const handlClickOutside = (event) => {
+    if( !event.composedPath().includes(sortRef.current)) {
+      setOpen(false)
+      console.log('click')
+    }
+  }
+document.body.addEventListener('click', handlClickOutside )
+return () => {
+  document.body.removeEventListener('click', handlClickOutside)
+}
+
+}, [])
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
