@@ -20,7 +20,7 @@ const addedCount = cartItem ? cartItem.count : 0 //увеличиваем счё
       price,
       imageUrl,
       type: typeNames[activeType],
-      size: activeSize
+      size: sizes[activeSize],
     }
     dispatch(addItem(item))
   }
