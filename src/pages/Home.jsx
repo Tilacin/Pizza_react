@@ -17,7 +17,7 @@ let Home = () => {
     const dispatch = useDispatch()
     const isSearch = React.useRef(false)
     const isMounted = React.useRef(false)
-    const {items, status} = useSelector((state) => state.pizza)
+    const { items, status } = useSelector((state) => state.pizza)
     const { categoryId, sort, currentPage } = useSelector((state) => state.filter)
     const sortType = sort.sortProperty
 
@@ -43,12 +43,12 @@ let Home = () => {
 
         dispatch(
             fetchPizzas({
-            sortBy,
-            order,
-            category,
-            search,
-            currentPage,
-        }),
+                sortBy,
+                order,
+                category,
+                search,
+                currentPage,
+            }),
         )
 
         window.scrollTo(0, 0)
@@ -110,10 +110,19 @@ let Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
-                {status === 'loading' ? skeletons : pizzas}
-            </div>
+            {
+                status === 'error' ? (
+                <div className="content__error-info">
+                    <h2>Произошла ошибка 😕</h2>
+                    <p>
+                        К сожалению не удалось получить пиццы
+                    </p>
+                </div>) : (<div className="content__items">
+                    {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
+                    {status === 'loading' ? skeletons : pizzas}
+                </div>)
+            }
+
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
         </div>
     )

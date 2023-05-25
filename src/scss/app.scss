@@ -8,7 +8,7 @@ body {
   background-color: $background;
 }
 .App {
- display: flex;
+  display: flex;
 }
 .wrapper {
   width: calc(100vw - 100px);
@@ -22,18 +22,30 @@ body {
     width: calc(100vw - 30px);
     margin-top: 15px;
   }
- 
 }
 
 .content {
   padding: 40px 0;
+
+  &__error-info {
+    margin: 100px auto;
+    max-width: 500px;
+    text-align: center;
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
 
   &__title {
     font-weight: 800;
     font-size: 38px;
     margin-top: 60px;
     margin-bottom: 50px;
-    
   }
 
   &__items {
@@ -62,7 +74,6 @@ body {
 
     @media (max-width: 1260px) {
       .categories {
-       
         width: 100%;
         overflow: auto; //при ширине < 1260px появляется скролл
 
@@ -113,7 +124,6 @@ body {
 }
 
 .cart {
-  
   &__top {
     display: flex;
     justify-content: space-between;
@@ -169,10 +179,9 @@ body {
     }
   }
 
-.content__items {
-display: block;
-
-}
+  .content__items {
+    display: block;
+  }
 
   &__item {
     display: flex;
@@ -343,7 +352,7 @@ display: block;
 
   &--empty {
     margin: 60px auto;
-    width: 620px;
+    max-width: 500px;
     text-align: center;
 
     h2 {
@@ -373,7 +382,8 @@ display: block;
     .button--black {
       padding: 12px 0 14px;
       width: 230px;
-      margin: 0 auto;
+    // margin: 0 auto;
+    margin-bottom: 10px;
       font-weight: 600;
       font-size: 18px;
     }
