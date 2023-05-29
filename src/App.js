@@ -9,16 +9,11 @@ import { Route, Routes } from "react-router-dom";
 
 import "./scss/app.scss";
 
-export const SearchContext = React.createContext(); //контекст
+
 
 function App() {
-  const [searchValue, setSearchValue] = React.useState(""); //инпут
-
   return (
     <div className="wrapper">
-      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-        {/* Обернули в контекст и 
-      теперь параметры можно пробросить сразу в нужный компонент, а не по цепочке вложенности */}
         <Header />
         <div className="container">
           {/* Делаем роутинг */}
@@ -30,7 +25,7 @@ function App() {
             <Route path="*" element={<NotFound />} />{" "}
           </Routes>
         </div>
-      </SearchContext.Provider>
+    
     </div>
   );
 }
