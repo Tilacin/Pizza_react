@@ -2,7 +2,7 @@ import React from "react";
 import qs from 'qs'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { selectFilter, setCategoryId, setCurentPage, setFilters } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
@@ -21,7 +21,7 @@ let Home = () => {
     const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter)
     const sortType = sort.sortProperty
 
-   
+
 
     //const [isLoading, setIsLoading] = React.useState(true); //скелетон
     const onChangeCategory = (id) => {
@@ -91,17 +91,11 @@ let Home = () => {
 
     }, [categoryId, sortType, searchValue, currentPage]);//если меняется категория(categoryId) или сорт(sortType) всегда делать запрос
 
-
-
-
-
-    const pizzas = items.filter(obj => {//отфильтровываем по названию при поиске в инпуте
-        if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
-            return true
-        }
-        return false
-
-    }).map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+    const pizzas = items.map((obj) => (
+        <Link key={obj.id} to={`/pizza/${obj.id}`}>
+            <PizzaBlock  {...obj} />
+        </Link>
+    ))
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />)
     return (
         <div className="content">
@@ -112,15 +106,15 @@ let Home = () => {
             <h2 className="content__title">Все пиццы</h2>
             {
                 status === 'error' ? (
-                <div className="content__error-info">
-                    <h2>Произошла ошибка 😕</h2>
-                    <p>
-                        К сожалению не удалось получить пиццы
-                    </p>
-                </div>) : (<div className="content__items">
-                    {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
-                    {status === 'loading' ? skeletons : pizzas}
-                </div>)
+                    <div className="content__error-info">
+                        <h2>Произошла ошибка 😕</h2>
+                        <p>
+                            К сожалению не удалось получить пиццы
+                        </p>
+                    </div>) : (<div className="content__items">
+                        {/*пока идёт загрузка - отображаем фейковый массив, элементы скелетон, иначе пиццы*/}
+                        {status === 'loading' ? skeletons : pizzas}
+                    </div>)
             }
 
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
