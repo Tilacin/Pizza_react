@@ -12,7 +12,7 @@ import Pagination from '../components/Pagination/pagination';
 
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
-let Home = () => {
+let Home: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isSearch = React.useRef(false)
@@ -24,13 +24,13 @@ let Home = () => {
 
 
     //const [isLoading, setIsLoading] = React.useState(true); //скелетон
-    const onChangeCategory = (id) => {
+    const onChangeCategory = (id: number) => {
 
         dispatch(setCategoryId(id))
 
     }
-    const onChangePage = number => {
-        dispatch(setCurentPage(number))
+    const onChangePage = (value: number) => {
+        dispatch(setCurentPage(value))
     }
 
     const getPizzas = async () => {
@@ -42,6 +42,7 @@ let Home = () => {
         const search = searchValue ? `&search=${searchValue}` : ''
 
         dispatch(
+            //@ts-ignore
             fetchPizzas({
                 sortBy,
                 order,
@@ -91,7 +92,7 @@ let Home = () => {
 
     }, [categoryId, sortType, searchValue, currentPage]);//если меняется категория(categoryId) или сорт(sortType) всегда делать запрос
 
-    const pizzas = items.map((obj) => (
+    const pizzas = items.map((obj: any) => (
         <Link key={obj.id} to={`/pizza/${obj.id}`}>
             <PizzaBlock  {...obj} />
         </Link>
