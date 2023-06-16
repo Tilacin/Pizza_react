@@ -23,7 +23,7 @@ const Search: React.FC = () => {
     [] //      после ввода каждой буквы приложение не отрисовывалось, а отрендирилось один раз
   );
 
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
