@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import filter from "./slices/filterSlice";
 import cart from "./slices/cartSlice";
 import pizza from "./slices/pizzasSlice";
+import { useDispatch } from "react-redux";
 
 //создали хранилище
 export const store = configureStore({
@@ -12,3 +13,8 @@ export const store = configureStore({
     pizza,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>
+
+type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()
