@@ -4,28 +4,22 @@ import qs from "qs";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  FilterSliceState,
-  selectFilter,
-  setCategoryId,
-  setCurentPage,
-  setFilters,
-} from "../redux/slices/filterSlice";
+
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import { Skeleton } from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination/pagination";
 
-import {
-  SearchPizzaParams,
-  fetchPizzas,
-  selectPizzaData,
-} from "../redux/slices/pizzasSlice";
+import { SearchPizzaParams } from "../redux/pizza/types";
 import { useAppDispatch } from "../redux/store";
+import { selectFilter } from "../redux/filter/selectors";
+import { selectPizzaData } from "../redux/pizza/selector";
+import { setCategoryId, setCurentPage, setFilters } from "../redux/filter/slice";
+import { fetchPizzas } from "../redux/pizza/asyncActions";
 
 let Home: React.FC = () => {
-  const navigate = useNavigate();
+  
   const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);

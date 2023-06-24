@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/Search/CartItem";
-import { clearItems, selectCart } from "../redux/slices/cartSlice";
+
 import CartEmpty from "../components/CartEmpty";
+import { selectCart } from "../redux/cart/selectors";
+import { clearItems } from "../redux/cart/slice";
 //useDispatch для очистки корзины, добавления, удаления
 //useSelector - что бы вывести все пиццы
 const Cart: React.FC = () => {

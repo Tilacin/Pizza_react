@@ -1,18 +1,32 @@
 import React from "react";
-import LogoSvg from '../assets/img/pizza-logo.svg'
+import LogoSvg from "../assets/img/pizza-logo.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Search from "./Search/search";
-import { selectCart } from "../redux/slices/cartSlice";
+import { selectCart } from "../redux/cart/selectors";
 
 function Header() {
-  const { items, totalPrice } = useSelector(selectCart)
-  const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
+  const { items, totalPrice } = useSelector(selectCart);
+  const isMounted = React.useRef(false);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
+//Сохраняем в локалсторидж
+  React.useEffect(() => {
+    if (isMounted) { //при первом рендере не сохраняем (isMounted = false)
+      const json = JSON.stringify(items);
+      localStorage.setItem("cart", json);
+    }
+    isMounted.current = true;
+  }, [items]);
 
   return (
     <div className="header">
       <div className="container">
-        <Link to="/"> {/* при нажатии на хедер, переходим на главную, Link не перезагружает стр. */}
+        <Link to="/">
+          {" "}
+          {/* при нажатии на хедер, переходим на главную, Link не перезагружает стр. */}
           <div className="header__logo">
             <img width="38" src={LogoSvg} alt="Pizza logo" />
             <div>
@@ -21,6 +35,7 @@ function Header() {
             </div>
           </div>
         </Link>
+
         <Search />
 
         <div className="header__cart">
@@ -64,4 +79,4 @@ function Header() {
   );
 }
 
-export default Header
+export default Header;
