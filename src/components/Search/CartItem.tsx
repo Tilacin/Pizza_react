@@ -27,6 +27,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({ id, title, type, size, price, 
   };
   const onClickMinus = () => {
     dispatch(minusItem(id));
+    
   };
   const onClickRemove = () => {
     if (window.confirm("Ты действительно хочешь удалить товар?"))

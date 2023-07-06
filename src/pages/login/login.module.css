@@ -1,0 +1,129 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+} 
+  
+   :root {
+    --index: calc(1vw + 1vh);
+    --transition: 1.5s cubic-bezier(0.05, 0.5, 0, 1);
+  } 
+  
+  .layers {
+    perspective: 1000px;
+    overflow: hidden;
+  }
+  .container {
+    height: 100vh;
+    min-height: 300px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--move-y)) rotateY(var(--move-x));
+    will-change: transform;
+    transition: transform var(--transition);
+  }
+  .item {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    inset: 0vw;
+  }
+  .layer_1 {
+    transform: translateZ(-55px) scale(1.1);
+    inset: -9vw;
+    background-image: url('./img/1.png');
+  }
+  .layer_2 {
+    transform: translateZ(80px);
+   
+  }
+  
+  .layer_2_img {
+    transform: translateZ(80px);
+    max-width: 100vw;
+  }
+  .choice{
+    
+    margin-top: 15vw;
+    font-family: Arial;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: calc(var(--index) * 0.9);
+    padding: calc(var(--index) * 0.7) calc(var(--index) * 0.3);
+    background-color: transparent;
+    color: aliceblue;
+    border-radius: 10em;
+    /* border: rgb(255 255 255/.4) 3px solid; */
+    outline: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 1324px) {
+    .layer_2_img {
+      position: absolute;
+      bottom: 0vw;
+      width: 100%;
+    }
+    .layer_6_img {
+     
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+    .layer_5_img{
+     
+      margin-bottom: 15%;
+    }
+    .choice {
+      transform: translateZ(180px) scale(1.3);
+    }
+  } 
+  
+  @media (max-width: 800px){
+    .layer_5_img {
+      transform: translateZ(180px) scale(1.7);
+     
+    }
+    .choice  {
+      transform: translateZ(180px) scale(1.7);
+    }
+    .layer_5_img{
+     
+      margin-bottom: 35%;
+    }
+  }
+  
+  
+  
+  .layer_3 {
+    transform: translateZ(100px);
+    inset: -0vw;
+  }
+  .layer_4 {
+    transform: translateZ(350px) scale(0.7);
+    inset: 0vw;
+  }
+  .layer_5 {
+    transform: translateZ(180px);
+    inset: 2vw;
+  }
+  .layer_5_img {
+    max-width: 35vw;
+  }
+  
+  .layer_6 {
+    display: flex;
+    transform: translateZ(290px) scale(0.9);
+  }
+  
+  .layer_6_img {
+    transform: translateZ(190px) scale();
+  
+    max-width: 100vw;
+  }
+  
+  

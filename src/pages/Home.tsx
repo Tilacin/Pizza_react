@@ -18,6 +18,7 @@ import { selectPizzaData } from "../redux/pizza/selector";
 import { setCategoryId, setCurentPage, setFilters } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizza/asyncActions";
 
+
 let Home: React.FC = () => {
   
   const dispatch = useAppDispatch();
@@ -51,8 +52,9 @@ let Home: React.FC = () => {
         search,
         currentPage: String(currentPage),
       })
+     
     );
-
+    
     window.scrollTo(0, 0);
   };
 
@@ -75,7 +77,7 @@ let Home: React.FC = () => {
         window.location.search.substring(1)
       ) as unknown as SearchPizzaParams;
       const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-
+     
       dispatch(
         setFilters({
           searchValue: params.search,

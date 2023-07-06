@@ -11,7 +11,7 @@ import { clearItems } from "../redux/cart/slice";
 const Cart: React.FC = () => {
   const dispatch = useDispatch()
   const { totalPrice, items } = useSelector(selectCart) //берём все пиццы
-
+  
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
 
   const onClickClear = () => {
@@ -21,6 +21,7 @@ const Cart: React.FC = () => {
   }
 
   if(!totalPrice) {  //если товаров нет рендерим страницу с картинкой корзины
+    
     return <CartEmpty/>
   }
 
