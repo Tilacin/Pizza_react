@@ -33,9 +33,11 @@ const cartSlice = createSlice({
       if (findItem) {
         findItem.count--;
       }
+      state.totalPrice = calcTotalPrice(state.items)//уменьшаем сумму при уменьшении кол-ва пицц
     },
     removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((obj) => obj.id !== action.payload);
+      state.totalPrice = calcTotalPrice(state.items)//уменьшаем сумму при удалении какой-нибудь пиццы
     },
     clearItems(state) {
       state.items = [];
